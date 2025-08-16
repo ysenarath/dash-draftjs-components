@@ -1,4 +1,5 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
-export(Editor)
+export(SimpleEditor)
 export(editor)
+export(simpleEditor)

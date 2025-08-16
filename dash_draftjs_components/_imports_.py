@@ -1,5 +1,5 @@
-from .Editor import Editor
+from .SimpleEditor import SimpleEditor
 
 __all__ = [
-    "Editor"
+    "SimpleEditor"
 ]
