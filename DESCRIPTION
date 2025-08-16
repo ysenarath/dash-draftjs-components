@@ -1,0 +1,13 @@
+Package: dashDraftjsComponents
+Title: DraftJS components for Plotly Dash
+Version: 0.0.1
+Description: DraftJS components for Plotly Dash
+Depends: R (>= 3.0.2)
+Imports: 
+Suggests: 
+License: MIT + file LICENSE
+URL: https://github.com/ysenarath/dash-draftjs-components
+BugReports: https://github.com/ysenarath/dash-draftjs-components/issues
+Encoding: UTF-8
+LazyData: true
+KeepSource: true
