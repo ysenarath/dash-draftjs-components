@@ -20,35 +20,92 @@ NumberType = typing.Union[
 
 class SimpleEditor(Component):
     """A SimpleEditor component.
-ExampleComponent is an example component.
-It takes a property, `label`, and
-displays it.
-It renders an input with the property `value`
-which is editable by the user.
+A simple text editor component using Draft.js.
 
 Keyword arguments:
 
-- id (string; optional)
+- id (string; optional):
+    The unique identifier for the component.
 
-- editorState (dict; default EditorState.createEmpty())
+- editor_state (dict; default EditorState.createEmpty()):
+    The current state of the editor. This should be an instance of
+    `EditorState`.
 
-- placeholder (string; optional)"""
+- open (boolean; default False):
+    Indicates whether the This is used to control the visibility of
+    the editor.
+
+- options (list of dicts; optional):
+    Array of mentions to display in the editor. Each mention should
+    have a name, link, and optionally an avatar. This is used to
+    render mentions in the editor.
+
+    `options` is a list of dicts with keys:
+
+    - name (string; required)
+
+    - link (string; required)
+
+    - avatar (string; optional)
+
+- suggestions (list of dicts; optional):
+    Array of suggestions for mentions. Each suggestion should have a
+    name, link, and optionally an avatar. This is used to provide
+    mention suggestions in the editor.
+
+    `suggestions` is a list of dicts with keys:
+
+    - name (string; required)
+
+    - link (string; required)
+
+    - avatar (string; optional)
+
+- toggle_inline_style (string; optional):
+    Number of times the bold button has been clicked. This is used to
+    toggle the bold style in the editor.
+
+- use_default_suggestions_filter (boolean; default True):
+    Indicates whether to use the default suggestions filter. If True,
+    the default filter will be used to filter suggestions based on
+    user input."""
     _children_props = []
     _base_nodes = ['children']
     _namespace = 'dash_draftjs_components'
     _type = 'SimpleEditor'
+    Options = TypedDict(
+        "Options",
+            {
+            "name": str,
+            "link": str,
+            "avatar": NotRequired[str]
+        }
+    )
+
+    Suggestions = TypedDict(
+        "Suggestions",
+            {
+            "name": str,
+            "link": str,
+            "avatar": NotRequired[str]
+        }
+    )
 
 
     def __init__(
         self,
         id: typing.Optional[typing.Union[str, dict]] = None,
-        editorState: typing.Optional[dict] = None,
-        placeholder: typing.Optional[str] = None,
+        editor_state: typing.Optional[dict] = None,
+        toggle_inline_style: typing.Optional[str] = None,
+        use_default_suggestions_filter: typing.Optional[bool] = None,
+        options: typing.Optional[typing.Sequence["Options"]] = None,
+        suggestions: typing.Optional[typing.Sequence["Suggestions"]] = None,
+        open: typing.Optional[bool] = None,
         **kwargs
     ):
-        self._prop_names = ['id', 'editorState', 'placeholder']
+        self._prop_names = ['id', 'editor_state', 'open', 'options', 'suggestions', 'toggle_inline_style', 'use_default_suggestions_filter']
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'editorState', 'placeholder']
+        self.available_properties = ['id', 'editor_state', 'open', 'options', 'suggestions', 'toggle_inline_style', 'use_default_suggestions_filter']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()
