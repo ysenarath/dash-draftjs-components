@@ -1,4 +1,10 @@
-import React, {useMemo, useEffect, useRef, useCallback, useState} from 'react';
+import React, {
+    useMemo,
+    useEffect,
+    useRef,
+    useCallback,
+    useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import {EditorState, RichUtils} from 'draft-js';
 import 'draft-js/dist/Draft.css';
@@ -64,21 +70,27 @@ const SimpleEditor = (props) => {
         const mentionPlugin = createMentionPlugin({
             mentionTrigger: '@',
             mentionPrefix: '@',
+            theme: {
+                mention: editorStyles.mention,
+                mentionSuggestions: editorStyles.mentionSuggestions,
+                mentionSuggestionsPopup: editorStyles.mentionSuggestionsPopup,
+                mentionSuggestionsPopupVisible: editorStyles.mentionSuggestionsPopupVisible,
+            },
         });
-        
+
         // Create command plugin for / commands (using mention plugin with different trigger)
         const commandPlugin = createMentionPlugin({
             mentionTrigger: '/',
             mentionPrefix: '/',
         });
-        
+
         // Create hashtag plugin for # hashtags
         const hashtagPlugin = createHashtagPlugin();
-        
+
         // eslint-disable-next-line no-shadow
         const {MentionSuggestions} = mentionPlugin;
         const {MentionSuggestions: CommandSuggestions} = commandPlugin;
-        
+
         // eslint-disable-next-line no-shadow
         const plugins = [mentionPlugin, commandPlugin, hashtagPlugin];
         return {plugins, MentionSuggestions, CommandSuggestions};
@@ -90,21 +102,26 @@ const SimpleEditor = (props) => {
     // Function to get the theme from data-bs-theme attribute
     const getTheme = useCallback(() => {
         // First check the HTML element
-        const htmlTheme = document.documentElement.getAttribute('data-bs-theme');
+        const htmlTheme =
+            document.documentElement.getAttribute('data-bs-theme');
         if (htmlTheme) {
             return htmlTheme;
         }
-        
+
         // Then check if a parent element has the data-bs-theme attribute
         let element = ref.current;
-        while (element && element !== document.documentElement && element.getAttribute) {
+        while (
+            element &&
+            element !== document.documentElement &&
+            element.getAttribute
+        ) {
             const theme = element.getAttribute('data-bs-theme');
             if (theme) {
                 return theme;
             }
             element = element.parentElement;
         }
-        
+
         // Default to light theme
         return 'light';
     }, []);
@@ -122,7 +139,10 @@ const SimpleEditor = (props) => {
         // Create a MutationObserver to watch for changes to data-bs-theme
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'data-bs-theme') {
+                if (
+                    mutation.type === 'attributes' &&
+                    mutation.attributeName === 'data-bs-theme'
+                ) {
                     updateTheme();
                 }
             });
@@ -131,16 +151,20 @@ const SimpleEditor = (props) => {
         // Observe changes to the HTML element and the component's parent elements
         observer.observe(document.documentElement, {
             attributes: true,
-            attributeFilter: ['data-bs-theme']
+            attributeFilter: ['data-bs-theme'],
         });
 
         // Also observe the component's container and its parents if they exist
         if (ref.current) {
             let element = ref.current.parentElement;
-            while (element && element !== document.documentElement && element.getAttribute) {
+            while (
+                element &&
+                element !== document.documentElement &&
+                element.getAttribute
+            ) {
                 observer.observe(element, {
                     attributes: true,
-                    attributeFilter: ['data-bs-theme']
+                    attributeFilter: ['data-bs-theme'],
                 });
                 element = element.parentElement;
             }
@@ -161,26 +185,44 @@ const SimpleEditor = (props) => {
         setProps({mention_open: _open});
     }, []);
 
-    const onMentionSearchChange = useCallback(({value}) => {
-        if (use_default_suggestions_filter) {
-            setProps({mention_suggestions: defaultSuggestionsFilter(value, mention_options)});
-        }
-    }, [mention_options, use_default_suggestions_filter]);
+    const onMentionSearchChange = useCallback(
+        ({value}) => {
+            if (use_default_suggestions_filter) {
+                setProps({
+                    mention_suggestions: defaultSuggestionsFilter(
+                        value,
+                        mention_options
+                    ),
+                });
+            }
+        },
+        [mention_options, use_default_suggestions_filter]
+    );
 
     const onCommandOpenChange = useCallback((_open) => {
         setProps({command_open: _open});
     }, []);
 
-    const onCommandSearchChange = useCallback(({value}) => {
-        if (use_default_suggestions_filter) {
-            setProps({command_suggestions: defaultSuggestionsFilter(value, command_options)});
-        }
-    }, [command_options, use_default_suggestions_filter]);
+    const onCommandSearchChange = useCallback(
+        ({value}) => {
+            if (use_default_suggestions_filter) {
+                setProps({
+                    command_suggestions: defaultSuggestionsFilter(
+                        value,
+                        command_options
+                    ),
+                });
+            }
+        },
+        [command_options, use_default_suggestions_filter]
+    );
 
     return (
-        <div 
-            id={id} 
-            className={`${editorStyles.editor} ${editorStyles[`theme-${currentTheme}`] || ''}`} 
+        <div
+            id={id}
+            className={`${editorStyles.editor} ${
+                editorStyles[`theme-${currentTheme}`] || ''
+            }`}
             data-bs-theme={currentTheme}
             onClick={onClickFocus}
         >

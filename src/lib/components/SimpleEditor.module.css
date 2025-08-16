@@ -17,174 +17,88 @@
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
 }
 
-/* Dark theme styles */
-.editor[data-bs-theme="dark"],
-.theme-dark {
-    background: #212529;
-    border-color: #495057;
-    color: #f8f9fa;
-    box-shadow: inset 0px 1px 8px -3px #000;
-}
-
-/* Light theme styles (explicit) */
-.editor[data-bs-theme="light"],
-.theme-light {
-    background: #fefefe;
-    border-color: #ddd;
-    color: #333;
-    box-shadow: inset 0px 1px 8px -3px #ABABAB;
-}
-
-/* Support for HTML element data-bs-theme */
-html[data-bs-theme="dark"] .editor {
-    background: #212529;
-    border-color: #495057;
-    color: #f8f9fa;
-    box-shadow: inset 0px 1px 8px -3px #000;
-}
-
-html[data-bs-theme="light"] .editor {
-    background: #fefefe;
-    border-color: #ddd;
-    color: #333;
-    box-shadow: inset 0px 1px 8px -3px #ABABAB;
-}
-
 .editor :global(.public-DraftEditor-content) {
     min-height: 140px;
 }
 
-/* Mention (@) styling */
-.editor :global(.draftJsMentionPlugin__mention__29BEd) {
-    color: #1da1f2;
-    background-color: rgba(29, 161, 242, 0.1);
-    padding: 2px 4px;
-    border-radius: 3px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.15s ease-in-out;
-}
-
-.editor :global(.draftJsMentionPlugin__mention__29BEd:hover) {
-    background-color: rgba(29, 161, 242, 0.2);
-}
-
-/* Dark theme mention styling */
-.editor[data-bs-theme="dark"] :global(.draftJsMentionPlugin__mention__29BEd),
-.theme-dark :global(.draftJsMentionPlugin__mention__29BEd),
-html[data-bs-theme="dark"] .editor :global(.draftJsMentionPlugin__mention__29BEd) {
-    color: #58a6ff;
-    background-color: rgba(88, 166, 255, 0.15);
-}
-
-.editor[data-bs-theme="dark"] :global(.draftJsMentionPlugin__mention__29BEd:hover),
-.theme-dark :global(.draftJsMentionPlugin__mention__29BEd:hover),
-html[data-bs-theme="dark"] .editor :global(.draftJsMentionPlugin__mention__29BEd:hover) {
-    background-color: rgba(88, 166, 255, 0.25);
-}
-
-/* Hashtag (#) styling */
-.editor :global(.draftJsHashtagPlugin__hashtag__1wMVC) {
-    color: #1da1f2;
-    background-color: rgba(29, 161, 242, 0.1);
-    padding: 2px 4px;
-    border-radius: 3px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.15s ease-in-out;
-}
-
-.editor :global(.draftJsHashtagPlugin__hashtag__1wMVC:hover) {
-    background-color: rgba(29, 161, 242, 0.2);
-}
-
-/* Dark theme hashtag styling */
-.editor[data-bs-theme="dark"] :global(.draftJsHashtagPlugin__hashtag__1wMVC),
-.theme-dark :global(.draftJsHashtagPlugin__hashtag__1wMVC),
-html[data-bs-theme="dark"] .editor :global(.draftJsHashtagPlugin__hashtag__1wMVC) {
-    color: #58a6ff;
-    background-color: rgba(88, 166, 255, 0.15);
-}
-
-.editor[data-bs-theme="dark"] :global(.draftJsHashtagPlugin__hashtag__1wMVC:hover),
-.theme-dark :global(.draftJsHashtagPlugin__hashtag__1wMVC:hover),
-html[data-bs-theme="dark"] .editor :global(.draftJsHashtagPlugin__hashtag__1wMVC:hover) {
-    background-color: rgba(88, 166, 255, 0.25);
-}
-
-/* Command (/) styling - using mention plugin with different trigger */
-.editor :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]) {
-    color: #17a2b8;
-    background-color: rgba(23, 162, 184, 0.1);
-    padding: 2px 4px;
-    border-radius: 3px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.15s ease-in-out;
-}
-
-.editor :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]:hover) {
-    background-color: rgba(23, 162, 184, 0.2);
-}
-
-/* Dark theme command styling */
-.editor[data-bs-theme="dark"] :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]),
-.theme-dark :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]),
-html[data-bs-theme="dark"] .editor :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]) {
-    color: #39d0d8;
-    background-color: rgba(57, 208, 216, 0.15);
-}
-
-.editor[data-bs-theme="dark"] :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]:hover),
-.theme-dark :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]:hover),
-html[data-bs-theme="dark"] .editor :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]:hover) {
-    background-color: rgba(57, 208, 216, 0.25);
-}
-
-/* Custom mention entry styling */
-.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainer__3mSwm) {
-    display: flex;
-    align-items: center;
-    padding: 8px 12px;
+.mentionSuggestions {
+    position: absolute;
+    min-width: 220px;
+    max-width: 440px;
+    background: #fff;
+    border-radius: 2px;
     cursor: pointer;
-}
-
-.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainer__3mSwm:hover) {
-    background-color: #f5f5f5;
-}
-
-/* Dark theme mention suggestions styling */
-.editor[data-bs-theme="dark"] :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainer__3mSwm:hover),
-.theme-dark :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainer__3mSwm:hover),
-html[data-bs-theme="dark"] .editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainer__3mSwm:hover) {
-    background-color: #343a40;
-}
-
-.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainerLeft__3g-2T) {
-    margin-right: 8px;
-}
-
-.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryAvatar__1xgA9) {
+    z-index: 2;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
+    padding: 4px;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    box-sizing: border-box;
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    /* add gap */
+    gap: 2px;
 }
 
-.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainerRight__3hqD5) {
-    flex: 1;
+.mentionSuggestionsPopup {
+    opacity: 0;
+    -webkit-transition: opacity 0.25s cubic-bezier(0.3, 1.2, 0.2, 1);
+    transition: opacity 0.25s cubic-bezier(0.3, 1.2, 0.2, 1);
 }
 
-.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryText__3Jobq) {
-    font-size: 14px;
-    color: #333;
-    transition: color 0.15s ease-in-out;
+.mentionSuggestionsPopupVisible {
+    opacity: 1;
 }
 
-/* Dark theme mention suggestions text styling */
-.editor[data-bs-theme="dark"] :global(.draftJsMentionPlugin__mentionSuggestionsEntryText__3Jobq),
-.theme-dark :global(.draftJsMentionPlugin__mentionSuggestionsEntryText__3Jobq),
-html[data-bs-theme="dark"] .editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryText__3Jobq) {
+.mention,
+.mention:visited {
+    color: #575f67;
+    cursor: pointer;
+    display: inline-block;
+    background: #e6f3ff;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 2px;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+}
+
+.mention:hover,
+.mention:focus {
+    color: #677584;
+    background: #edf5fd;
+    outline: 0;
+}
+
+.mention:active {
+    color: #222;
+    background: #455261;
+}
+
+.dark-theme,
+.editor[data-bs-theme="dark"],
+html[data-bs-theme="dark"] .editor,
+.editor[data-bs-theme="dark"] .mentionSuggestions,
+html[data-bs-theme="dark"] .mentionSuggestions {
+    background: #212529;
+    border-color: #495057;
     color: #f8f9fa;
+    box-shadow: 1px 1px 5px 0.1px rgb(255, 255, 255);
+}
+
+.light-theme,
+.editor[data-bs-theme="light"],
+html[data-bs-theme="light"] .editor,
+.editor[data-bs-theme="light"] .mentionSuggestions,
+html[data-bs-theme="light"] .mentionSuggestions {
+    background: #fefefe;
+    border-color: #ddd;
+    color: #333;
+    /* box-shadow: inset 0px 1px 8px -3px #ABABAB; */
+    box-shadow: 1px 1px 5px 0.1px rgb(0, 0, 0);
 }
