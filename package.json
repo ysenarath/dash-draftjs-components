@@ -19,7 +19,9 @@
         "build:backends": "dash-generate-components ./src/lib/components dash_draftjs_components -p package-info.json --r-prefix '' --jl-prefix '' --ignore \\.test\\.",
         "build:backends-activated": "(. venv/bin/activate || venv\\scripts\\activate && npm run build:backends)",
         "build": "npm run build:js && npm run build:backends",
-        "build:activated": "npm run build:js && npm run build:backends-activated"
+        "build:activated": "npm run build:js && npm run build:backends-activated",
+        "watch": "while true; do fswatch -o src/lib | xargs -n1 -I{} npm run build; done",
+        "py": "while true; do fswatch -o dash_draftjs_components | xargs -n1 -I{} uv run usage.py; done"
     },
     "author": "Yasas Senarath <12231659+ysenarath@users.noreply.github.com>",
     "license": "MIT",
