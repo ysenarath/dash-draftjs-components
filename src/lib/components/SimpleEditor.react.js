@@ -29,10 +29,16 @@ const SimpleEditor = (props) => {
         command_suggestions,
         command_open,
         use_default_suggestions_filter,
+        value,
     } = props;
 
     const setEditorState = (newEditorState) => {
         setProps({editor_state: newEditorState});
+        // Extract plain text from the editor state and trigger callback if text changed
+        const newText = newEditorState.getCurrentContent().getPlainText();
+        if (newText !== value) {
+            setProps({value: newText});
+        }
     };
 
     // listen for button clicks to toggle bold style
@@ -144,6 +150,7 @@ SimpleEditor.defaultProps = {
     command_suggestions: [],
     command_open: false,
     use_default_suggestions_filter: true,
+    value: '',
 };
 
 SimpleEditor.propTypes = {
@@ -233,6 +240,12 @@ SimpleEditor.propTypes = {
      * This is used to control the visibility of the command suggestions.
      */
     command_open: PropTypes.bool,
+
+    /**
+     * The plain text content of the editor.
+     * This is automatically extracted from the editor state and updated when the content changes.
+     */
+    value: PropTypes.string,
 
     /**
      * Function to set properties in the parent component.

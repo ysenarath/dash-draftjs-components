@@ -93,13 +93,13 @@ app.layout = html.Div(
 
 @callback(
     Output("output", "children"),
+    Input("input", "value"),
     Input("input", "editor_state"),
 )
-def update_output(editor_state):
+def update_output(text, editor_state):
     if editor_state is None:
         return "No content"
-    # return html.Pre(json.dumps(editor_state, indent=2))
-    return []
+    return [text, html.Pre(json.dumps(editor_state, indent=2))]
 
 
 @callback(
