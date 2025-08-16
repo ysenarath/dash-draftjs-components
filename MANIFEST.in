@@ -1,0 +1,11 @@
+include dash_draftjs_components/dash_draftjs_components.min.js
+include dash_draftjs_components/dash_draftjs_components.min.js.map
+include dash_draftjs_components/async-*.js
+include dash_draftjs_components/async-*.js.map
+include dash_draftjs_components/*-shared.js
+include dash_draftjs_components/*-shared.js.map
+include dash_draftjs_components/metadata.json
+include dash_draftjs_components/package-info.json
+include README.md
+include LICENSE
+include package.json
