@@ -60,3 +60,36 @@
 .editor :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]:hover) {
     background-color: rgba(23, 162, 184, 0.2);
 }
+
+/* Custom mention entry styling */
+.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainer__3mSwm) {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainer__3mSwm:hover) {
+    background-color: #f5f5f5;
+}
+
+.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainerLeft__3g-2T) {
+    margin-right: 8px;
+}
+
+.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryAvatar__1xgA9) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryContainerRight__3hqD5) {
+    flex: 1;
+}
+
+.editor :global(.draftJsMentionPlugin__mentionSuggestionsEntryText__3Jobq) {
+    font-size: 14px;
+    color: #333;
+}

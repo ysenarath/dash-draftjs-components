@@ -10,6 +10,7 @@ import createMentionPlugin, {
 } from '@draft-js-plugins/mention';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
 import editorStyles from './SimpleEditor.module.css';
+import MentionEntry from './MentionEntry.react';
 
 /**
  * A simple text editor component using Draft.js.
@@ -123,6 +124,7 @@ const SimpleEditor = (props) => {
                 onOpenChange={onMentionOpenChange}
                 suggestions={mention_suggestions}
                 onSearchChange={onMentionSearchChange}
+                entryComponent={MentionEntry}
                 onAddMention={() => {
                     // get the mention object selected
                 }}
@@ -132,6 +134,7 @@ const SimpleEditor = (props) => {
                 onOpenChange={onCommandOpenChange}
                 suggestions={command_suggestions}
                 onSearchChange={onCommandSearchChange}
+                entryComponent={MentionEntry}
                 onAddMention={() => {
                     // get the command object selected
                 }}
