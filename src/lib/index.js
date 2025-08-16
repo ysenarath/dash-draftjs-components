@@ -1,6 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-import Editor from './components/Editor.react';
+import SimpleEditor from "./components/SimpleEditor.react";
 
-export {
-    Editor
-};
+export { SimpleEditor };
