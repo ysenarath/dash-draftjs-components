@@ -278,3 +278,24 @@ GitHub.sublime-settings
 # Julia manifest file names
 Manifest.toml
 JuliaManifest.toml
+
+# Ignore these from the main branch (see the build branch)
+dash_draftjs_components/_imports_.py
+dash_draftjs_components/dash_draftjs_components.min.js
+dash_draftjs_components/dash_draftjs_components.min.js.map
+dash_draftjs_components/Editor.py
+dash_draftjs_components/metadata.json
+dash_draftjs_components/package-info.json
+deps/dash_draftjs_components.min.js
+deps/dash_draftjs_components.min.js.map
+inst/deps/dash_draftjs_components.min.js
+inst/deps/dash_draftjs_components.min.js.map
+man/editor.Rd
+R/editor.R
+R/internal.R
+src/DashDraftjsComponents.jl
+src/jl/editor.jl
+.Rbuildignore
+DESCRIPTION
+NAMESPACE
+Project.toml
