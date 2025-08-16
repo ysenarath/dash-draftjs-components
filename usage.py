@@ -4,6 +4,7 @@ from dash import Dash, callback, html, Input, Output
 
 app = Dash(__name__)
 
+# Mention options for @ mentions
 mentions = [
     {
         "name": "Matthew Russell",
@@ -36,11 +37,55 @@ mentions = [
         "avatar": "https://pbs.twimg.com/profile_images/688487813025640448/E6O6I011_400x400.png",
     },
 ]
+
+# Command options for / commands
+commands = [
+    {
+        "name": "bold",
+        "link": "/bold",
+        "avatar": "💪",
+    },
+    {
+        "name": "italic",
+        "link": "/italic",
+        "avatar": "📝",
+    },
+    {
+        "name": "heading",
+        "link": "/heading",
+        "avatar": "📰",
+    },
+    {
+        "name": "list",
+        "link": "/list",
+        "avatar": "📋",
+    },
+    {
+        "name": "quote",
+        "link": "/quote",
+        "avatar": "💬",
+    },
+    {
+        "name": "code",
+        "link": "/code",
+        "avatar": "💻",
+    },
+]
 app.layout = html.Div(
     [
+        html.H1("DraftJS Editor with Mentions (@), Hashtags (#), and Commands (/)"),
+        html.P("Try typing @ to mention someone, # for hashtags, or / for commands!"),
         html.Button("Bold", id="bold-button", n_clicks=0),
         html.Button("Code", id="code-button", n_clicks=0),
-        ddc.SimpleEditor(id="input", options=mentions),
+        ddc.SimpleEditor(
+            id="input",
+            mention_options=mentions,
+            command_options=commands,
+            mention_suggestions=[],
+            command_suggestions=[],
+            mention_open=False,
+            command_open=False,
+        ),
         html.Div(id="output"),
     ]
 )

@@ -18,3 +18,45 @@
 .editor :global(.public-DraftEditor-content) {
     min-height: 140px;
 }
+
+/* Mention (@) styling */
+.editor :global(.draftJsMentionPlugin__mention__29BEd) {
+    color: #1da1f2;
+    background-color: rgba(29, 161, 242, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.editor :global(.draftJsMentionPlugin__mention__29BEd:hover) {
+    background-color: rgba(29, 161, 242, 0.2);
+}
+
+/* Hashtag (#) styling */
+.editor :global(.draftJsHashtagPlugin__hashtag__1wMVC) {
+    color: #1da1f2;
+    background-color: rgba(29, 161, 242, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.editor :global(.draftJsHashtagPlugin__hashtag__1wMVC:hover) {
+    background-color: rgba(29, 161, 242, 0.2);
+}
+
+/* Command (/) styling - using mention plugin with different trigger */
+.editor :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]) {
+    color: #17a2b8;
+    background-color: rgba(23, 162, 184, 0.1);
+    padding: 2px 4px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.editor :global(.draftJsMentionPlugin__mention__29BEd[data-mention-trigger="/"]:hover) {
+    background-color: rgba(23, 162, 184, 0.2);
+}

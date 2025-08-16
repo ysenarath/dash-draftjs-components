@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import {EditorState, RichUtils} from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import '@draft-js-plugins/mention/lib/plugin.css';
+import '@draft-js-plugins/hashtag/lib/plugin.css';
 import Editor from '@draft-js-plugins/editor';
 import createMentionPlugin, {
     defaultSuggestionsFilter,
 } from '@draft-js-plugins/mention';
+import createHashtagPlugin from '@draft-js-plugins/hashtag';
 import editorStyles from './SimpleEditor.module.css';
 
 /**
@@ -20,9 +22,12 @@ const SimpleEditor = (props) => {
         setProps,
         editor_state,
         toggle_inline_style,
-        options,
-        suggestions,
-        open,
+        mention_options,
+        mention_suggestions,
+        mention_open,
+        command_options,
+        command_suggestions,
+        command_open,
         use_default_suggestions_filter,
     } = props;
 
@@ -47,16 +52,29 @@ const SimpleEditor = (props) => {
         }
     }, [toggle_inline_style]);
 
-    const {MentionSuggestions, plugins} = useMemo(() => {
+    const {MentionSuggestions, CommandSuggestions, plugins} = useMemo(() => {
+        // Create mention plugin for @ mentions
         const mentionPlugin = createMentionPlugin({
-            mentionTrigger: '#',
-            mentionPrefix: '#',
+            mentionTrigger: '@',
+            mentionPrefix: '@',
         });
+        
+        // Create command plugin for / commands (using mention plugin with different trigger)
+        const commandPlugin = createMentionPlugin({
+            mentionTrigger: '/',
+            mentionPrefix: '/',
+        });
+        
+        // Create hashtag plugin for # hashtags
+        const hashtagPlugin = createHashtagPlugin();
+        
         // eslint-disable-next-line no-shadow
         const {MentionSuggestions} = mentionPlugin;
+        const {MentionSuggestions: CommandSuggestions} = commandPlugin;
+        
         // eslint-disable-next-line no-shadow
-        const plugins = [mentionPlugin];
-        return {plugins, MentionSuggestions};
+        const plugins = [mentionPlugin, commandPlugin, hashtagPlugin];
+        return {plugins, MentionSuggestions, CommandSuggestions};
     }, []);
 
     const onClickFocus = () => {
@@ -65,15 +83,25 @@ const SimpleEditor = (props) => {
         }
     };
 
-    const onOpenChange = useCallback((_open) => {
-        setProps({open: _open});
+    const onMentionOpenChange = useCallback((_open) => {
+        setProps({mention_open: _open});
     }, []);
 
-    const onSearchChange = useCallback(({value}) => {
+    const onMentionSearchChange = useCallback(({value}) => {
         if (use_default_suggestions_filter) {
-            setProps({suggestions: defaultSuggestionsFilter(value, options)});
+            setProps({mention_suggestions: defaultSuggestionsFilter(value, mention_options)});
         }
+    }, [mention_options, use_default_suggestions_filter]);
+
+    const onCommandOpenChange = useCallback((_open) => {
+        setProps({command_open: _open});
     }, []);
+
+    const onCommandSearchChange = useCallback(({value}) => {
+        if (use_default_suggestions_filter) {
+            setProps({command_suggestions: defaultSuggestionsFilter(value, command_options)});
+        }
+    }, [command_options, use_default_suggestions_filter]);
 
     return (
         <div id={id} className={editorStyles.editor} onClick={onClickFocus}>
@@ -85,12 +113,21 @@ const SimpleEditor = (props) => {
                 ref={ref}
             />
             <MentionSuggestions
-                open={open}
-                onOpenChange={onOpenChange}
-                suggestions={suggestions}
-                onSearchChange={onSearchChange}
+                open={mention_open}
+                onOpenChange={onMentionOpenChange}
+                suggestions={mention_suggestions}
+                onSearchChange={onMentionSearchChange}
                 onAddMention={() => {
                     // get the mention object selected
+                }}
+            />
+            <CommandSuggestions
+                open={command_open}
+                onOpenChange={onCommandOpenChange}
+                suggestions={command_suggestions}
+                onSearchChange={onCommandSearchChange}
+                onAddMention={() => {
+                    // get the command object selected
                 }}
             />
         </div>
@@ -100,9 +137,12 @@ const SimpleEditor = (props) => {
 SimpleEditor.defaultProps = {
     toggle_inline_style: null,
     editor_state: EditorState.createEmpty(),
-    options: [],
-    suggestions: [],
-    open: false,
+    mention_options: [],
+    mention_suggestions: [],
+    mention_open: false,
+    command_options: [],
+    command_suggestions: [],
+    command_open: false,
     use_default_suggestions_filter: true,
 };
 
@@ -131,11 +171,11 @@ SimpleEditor.propTypes = {
     use_default_suggestions_filter: PropTypes.bool,
 
     /**
-     * Array of mentions to display in the editor.
+     * Array of mention options to display in the editor.
      * Each mention should have a name, link, and optionally an avatar.
-     * This is used to render mentions in the editor.
+     * This is used to render @ mentions in the editor.
      */
-    options: PropTypes.arrayOf(
+    mention_options: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string.isRequired,
             link: PropTypes.string.isRequired,
@@ -144,11 +184,11 @@ SimpleEditor.propTypes = {
     ),
 
     /**
-     * Array of suggestions for mentions.
+     * Array of suggestions for @ mentions.
      * Each suggestion should have a name, link, and optionally an avatar.
      * This is used to provide mention suggestions in the editor.
      */
-    suggestions: PropTypes.arrayOf(
+    mention_suggestions: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string.isRequired,
             link: PropTypes.string.isRequired,
@@ -157,10 +197,42 @@ SimpleEditor.propTypes = {
     ),
 
     /**
-     * Indicates whether the
-     * This is used to control the visibility of the editor.
+     * Indicates whether the mention suggestions dropdown is open.
+     * This is used to control the visibility of the mention suggestions.
      */
-    open: PropTypes.bool,
+    mention_open: PropTypes.bool,
+
+    /**
+     * Array of command options to display in the editor.
+     * Each command should have a name, link, and optionally an avatar.
+     * This is used to render / commands in the editor.
+     */
+    command_options: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            link: PropTypes.string.isRequired,
+            avatar: PropTypes.string,
+        })
+    ),
+
+    /**
+     * Array of suggestions for / commands.
+     * Each suggestion should have a name, link, and optionally an avatar.
+     * This is used to provide command suggestions in the editor.
+     */
+    command_suggestions: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            link: PropTypes.string.isRequired,
+            avatar: PropTypes.string,
+        })
+    ),
+
+    /**
+     * Indicates whether the command suggestions dropdown is open.
+     * This is used to control the visibility of the command suggestions.
+     */
+    command_open: PropTypes.bool,
 
     /**
      * Function to set properties in the parent component.
