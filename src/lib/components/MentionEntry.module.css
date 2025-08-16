@@ -33,6 +33,23 @@
     /* accent-foreground */
 }
 
+/* Dark theme styles for mention entry */
+[data-bs-theme="dark"] .mentionEntry:hover,
+html[data-bs-theme="dark"] .mentionEntry:hover {
+    background-color: hsl(210 10% 23%);
+    /* dark accent/hover */
+    color: hsl(210 40% 98%);
+    /* dark accent-foreground */
+}
+
+[data-bs-theme="dark"] .mentionEntryFocused,
+html[data-bs-theme="dark"] .mentionEntryFocused {
+    background-color: hsl(210 10% 20%);
+    /* dark accent */
+    color: hsl(210 40% 98%);
+    /* dark accent-foreground */
+}
+
 .entryContainer {
     display: flex;
     align-items: center;
@@ -61,6 +78,13 @@
     /* muted */
 }
 
+/* Dark theme avatar container */
+[data-bs-theme="dark"] .avatarContainerWithoutImage,
+html[data-bs-theme="dark"] .avatarContainerWithoutImage {
+    background-color: hsl(210 10% 23%);
+    /* dark muted */
+}
+
 .avatarEmoji {
     font-size: 1rem;
     /* text-base */
@@ -86,6 +110,14 @@
     /* muted-foreground */
     text-transform: uppercase;
     letter-spacing: 0.025em;
+    transition: color 0.15s ease-in-out;
+}
+
+/* Dark theme avatar default */
+[data-bs-theme="dark"] .avatarDefault,
+html[data-bs-theme="dark"] .avatarDefault {
+    color: hsl(215.4 16.3% 65%);
+    /* dark muted-foreground */
 }
 
 .textContainer {
@@ -111,6 +143,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    transition: color 0.15s ease-in-out;
+}
+
+/* Dark theme mention name */
+[data-bs-theme="dark"] .mentionName,
+html[data-bs-theme="dark"] .mentionName {
+    color: hsl(210 40% 98%);
+    /* dark foreground */
 }
 
 .mentionDescription {
@@ -125,6 +165,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    transition: color 0.15s ease-in-out;
+}
+
+/* Dark theme mention description */
+[data-bs-theme="dark"] .mentionDescription,
+html[data-bs-theme="dark"] .mentionDescription {
+    color: hsl(215.4 16.3% 65%);
+    /* dark muted-foreground */
 }
 
 .highlight {
@@ -139,4 +187,14 @@
     font-weight: 500;
     /* font-medium */
     border: none;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+/* Dark theme highlight */
+[data-bs-theme="dark"] .highlight,
+html[data-bs-theme="dark"] .highlight {
+    background-color: hsl(45 93% 47%);
+    /* dark yellow-400 equivalent */
+    color: hsl(20 14.3% 4.1%);
+    /* dark yellow-900 equivalent */
 }

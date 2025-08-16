@@ -1,4 +1,4 @@
-import React, {useMemo, useEffect, useRef, useCallback} from 'react';
+import React, {useMemo, useEffect, useRef, useCallback, useState} from 'react';
 import PropTypes from 'prop-types';
 import {EditorState, RichUtils} from 'draft-js';
 import 'draft-js/dist/Draft.css';
@@ -84,6 +84,73 @@ const SimpleEditor = (props) => {
         return {plugins, MentionSuggestions, CommandSuggestions};
     }, []);
 
+    // State to track the current theme from data-bs-theme
+    const [currentTheme, setCurrentTheme] = useState('light');
+
+    // Function to get the theme from data-bs-theme attribute
+    const getTheme = useCallback(() => {
+        // First check the HTML element
+        const htmlTheme = document.documentElement.getAttribute('data-bs-theme');
+        if (htmlTheme) {
+            return htmlTheme;
+        }
+        
+        // Then check if a parent element has the data-bs-theme attribute
+        let element = ref.current;
+        while (element && element !== document.documentElement && element.getAttribute) {
+            const theme = element.getAttribute('data-bs-theme');
+            if (theme) {
+                return theme;
+            }
+            element = element.parentElement;
+        }
+        
+        // Default to light theme
+        return 'light';
+    }, []);
+
+    // Update theme when component mounts and when data-bs-theme changes
+    useEffect(() => {
+        const updateTheme = () => {
+            const theme = getTheme();
+            setCurrentTheme(theme);
+        };
+
+        // Initial theme detection
+        updateTheme();
+
+        // Create a MutationObserver to watch for changes to data-bs-theme
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'data-bs-theme') {
+                    updateTheme();
+                }
+            });
+        });
+
+        // Observe changes to the HTML element and the component's parent elements
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-bs-theme']
+        });
+
+        // Also observe the component's container and its parents if they exist
+        if (ref.current) {
+            let element = ref.current.parentElement;
+            while (element && element !== document.documentElement && element.getAttribute) {
+                observer.observe(element, {
+                    attributes: true,
+                    attributeFilter: ['data-bs-theme']
+                });
+                element = element.parentElement;
+            }
+        }
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [getTheme]);
+
     const onClickFocus = () => {
         if (ref.current) {
             ref.current.focus();
@@ -111,7 +178,12 @@ const SimpleEditor = (props) => {
     }, [command_options, use_default_suggestions_filter]);
 
     return (
-        <div id={id} className={editorStyles.editor} onClick={onClickFocus}>
+        <div 
+            id={id} 
+            className={`${editorStyles.editor} ${editorStyles[`theme-${currentTheme}`] || ''}`} 
+            data-bs-theme={currentTheme}
+            onClick={onClickFocus}
+        >
             <Editor
                 editorKey={'editor'}
                 editorState={editor_state}
